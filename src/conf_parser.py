@@ -26,7 +26,8 @@ class ConfParse:
         :param required: True if the configuration must have this argument
         :return: None
         '''
-        arg = Argument(name=arg_name, argument_type=arg_type, default_value=default, description=description, required=required)
+        arg = Argument(name=arg_name, argument_type=arg_type, default_value=default, description=description,
+                       required=required)
         self.arguments.append(arg)
 
     def add_sub_section(self, name: str, section: ConfParse) -> None:
@@ -46,6 +47,18 @@ class ConfParse:
         :param values: python dictionary representing the concrete configuration with values.
         :return: self
         '''
+        self._parse_args(values)
+        self._parse_subsections(values)
+        return self
+
+    def _parse_subsections(self, values: dict):
+        for sub_section_name, sub_section in self.sub_sections.items():
+            if not sub_section.required and sub_section_name not in values.keys():
+                continue
+            parsed_sub_section = sub_section._parse(values[sub_section_name])
+            setattr(self, sub_section_name, parsed_sub_section)
+
+    def _parse_args(self, values: dict):
         for arg in self.arguments:
             val = values.get(arg.name, None)
             if not val and arg.required and not arg.default:
@@ -53,12 +66,6 @@ class ConfParse:
                     f"Failed to find argument named {arg.name} in context {self.context}")
             arg.validate(val)
             setattr(self, arg.name, val)
-        for sub_section_name, sub_section in self.sub_sections.items():
-            if not sub_section.required and sub_section_name not in values.keys():
-                continue
-            parsed_sub_section = sub_section._parse(values[sub_section_name])
-            setattr(self, sub_section_name, parsed_sub_section)
-        return self
 
     def parse(self, path: str) -> ConfParse:
         '''
