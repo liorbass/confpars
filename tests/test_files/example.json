@@ -1,0 +1,81 @@
+ {
+    "tenants": [{
+            "tenantURI": "2345556789",
+            "description": "Voice Gateway Demo US",
+            "whitelistFromUri": "8765554321",
+            "putCallerOnHoldOnTransfer": "false",
+            "conversation": {
+                "url": "https://api.us-south.assistant.watson.cloud.ibm.com/instances/{instance_id}",
+                "workspaceID": "a23de67h-e527-40d5-a867-5c0ce9e72d0d",
+                "apikey": "{apikey}",
+                "tokenServiceProviderUrl": "https://iam.cloud.ibm.com/identity/token"
+            },
+            "stt": {
+                "credentials": {
+                    "url": "https://api.us-south.speech-to-text.watson.cloud.ibm.com/instances/{instance_id}",
+                    "apikey": "{apikey}",
+                    "tokenServiceProviderUrl": "https://iam.cloud.ibm.com/identity/token"
+                },
+                "config": {
+                    "model": "en-US_NarrowbandModel",
+                    "profanity_filter": true,
+                    "smart_formatting": true
+                },
+                "broadbandConfig": {
+                    "model": "en-US_BroadbandModel",
+                    "profanity_filter": true,
+                    "smart_formatting": true
+                },
+                "bandPreference": "broadband",
+                "confidenceScoreThreshold": 0.2,
+                "echoSuppression": true,
+                "bargeInResume": true,
+                "trackLatency": false
+            },
+            "tts": {
+                "cacheTimeToLive": 336,
+                "credentials": {
+                    "url": "https://api.us-south.text-to-speech.watson.cloud.ibm.com/instances/{instance_id}",
+                    "apikey": "{apikey}",
+                    "tokenServiceProviderUrl": "https://iam.cloud.ibm.com/identity/token"
+                },
+                "config": {
+                    "voice": "en-US_MichaelVoice"
+                }
+            },
+            "reporting": {
+                "url": "http://10.10.10.10:8080",
+                "username": "john.smith",
+                "password": "HcmzFp1kec1P",
+                "cdrEventInd": "cdr",
+                "convEventInd": "conv",
+                "transcriptionEventInd": "transcription"
+            },
+            "smsPipe": {
+                "url": "http://host:port/sms.gateway/smsPipe",
+                "username": "tR3qNZ12-u53qmz93",
+                "password": "Qz34x05e",
+                "tenantPhoneNumber": "+18765554321"
+            },
+      "enableOutboundCalls": true,
+      "outboundCalls": {
+        "statusWebhook": "http://need.example.webhook.url.com/",
+        "tenantURI": "same as tenant URI above?",
+        "connectTimeout": 3,
+        "readTimeout": 5,
+        "maxRetyNo": 2
+      },
+      "restAPI": {
+        "username": "exampleusername",
+        "password": "examplepassword"
+      },
+      "mediaEncryption": {
+        "encryptionType": "srtp",
+        "forceMediaEncryption": true
+    }
+  },
+    {
+            "tenantURI": "2345557890@example.com"
+        }
+    ]
+}
